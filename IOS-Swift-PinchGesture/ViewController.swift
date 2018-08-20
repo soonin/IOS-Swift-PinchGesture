@@ -10,16 +10,23 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var viewPinch: UIView!
+    var pinchGesture  = UIPinchGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // PINCH Gesture
+        pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(ViewController.pinchedView))
+        viewPinch.isUserInteractionEnabled = true
+        viewPinch.addGestureRecognizer(pinchGesture)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @objc func pinchedView(sender:UIPinchGestureRecognizer){
+        self.view.bringSubview(toFront: viewPinch)
+        sender.view?.transform = (sender.view?.transform)!.scaledBy(x: sender.scale, y: sender.scale)
+        sender.scale = 1.0
     }
-
 
 }
 
